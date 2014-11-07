@@ -130,7 +130,7 @@ public class NotifierMenuActivity extends Activity implements LocationListener {
         nextViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(NotifierMenuActivity.this, NotifierMeActivity.class));
+                startActivity(new Intent(NotifierMenuActivity.this, NotifyMeActivity.class));
             }
         });
     }
