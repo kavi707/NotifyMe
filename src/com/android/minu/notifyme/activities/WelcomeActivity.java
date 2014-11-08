@@ -187,7 +187,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void onContinue() {
-        Intent notifierIntent = new Intent(WelcomeActivity.this, NotifierMenuActivity.class);
+        Intent notifierIntent = new Intent(WelcomeActivity.this, NotifyMeActivity.class);
         startActivity(notifierIntent);
         finish();
     }

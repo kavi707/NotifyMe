@@ -32,6 +32,7 @@
         </activity>
         <activity android:name=".activities.NotifierMenuActivity"/>
         <activity android:name=".activities.NotifyMeActivity"/>
+        <activity android:name=".activities.NewLocationActivity" />
     </application>
 
 </manifest>
