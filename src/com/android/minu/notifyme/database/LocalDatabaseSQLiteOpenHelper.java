@@ -19,6 +19,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String LOCATIONS_TABLE_NAME = "locations";
     public static final String LOCATION_ID = "location_id";
+    public static final String LOCATION_NAME = "location_name";
     public static final String CELL_ID = "cell_id";
     public static final String LAC = "lac";
     public static final String LONGITUDE = "longitude";
@@ -46,6 +47,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
     private void createLocationsTable(SQLiteDatabase sqLiteDatabase) {
         String createTableQuery = "create table " + LOCATIONS_TABLE_NAME + " (" +
                 LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT not null, " +
+                LOCATION_NAME + " text, " +
                 CELL_ID + " int, " +
                 LAC + " int, " +
                 LONGITUDE + " real, " +
@@ -61,6 +63,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
+        values.put(LOCATION_NAME, location.getLocationName());
         values.put(CELL_ID, location.getCellId());
         values.put(LAC, location.getLac());
         values.put(LONGITUDE, location.getLongitude());
@@ -91,12 +94,13 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
                 do {
                     getLocation = new LocationData();
                     getLocation.setLocationId(locationCursor.getInt(0));
-                    getLocation.setCellId(locationCursor.getInt(1));
-                    getLocation.setLac(locationCursor.getInt(2));
-                    getLocation.setLongitude(locationCursor.getDouble(3));
-                    getLocation.setLatitude(locationCursor.getDouble(4));
-                    getLocation.setSecondaryCell(locationCursor.getInt(5));
-                    getLocation.setSecondaryLac(locationCursor.getInt(6));
+                    getLocation.setLocationName(locationCursor.getString(1));
+                    getLocation.setCellId(locationCursor.getInt(2));
+                    getLocation.setLac(locationCursor.getInt(3));
+                    getLocation.setLongitude(locationCursor.getDouble(4));
+                    getLocation.setLatitude(locationCursor.getDouble(5));
+                    getLocation.setSecondaryCell(locationCursor.getInt(6));
+                    getLocation.setSecondaryLac(locationCursor.getInt(7));
                 } while (locationCursor.moveToNext());
             }
             locationCursor.close();

@@ -197,7 +197,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/resetButton"
+        android:layout_toLeftOf="@+id/refreshButton"
         android:text="Add" />
 
     <Button
@@ -206,14 +206,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/resetButton"
+        android:layout_toRightOf="@+id/refreshButton"
         android:text="Cancel" />
 
     <Button
-        android:id="@+id/resetButton"
+        android:id="@+id/refreshButton"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Reset" />
+        android:text="Refresh" />
 </RelativeLayout>

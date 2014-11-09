@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.minu.notifyme.R;
+import com.android.minu.notifyme.activities.NewLocationActivity;
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
 import com.android.minu.notifyme.database.LocationData;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
@@ -26,7 +27,7 @@ import com.android.minu.notifyme.services.location.LocatorCalls;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeFragment extends Fragment implements LocationListener {
+public class HomeFragment extends Fragment{
 
     private View homeFragmentView;
 
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     private Button showOnMapButton;
     private Button startServiceButton;
     private Button stopServiceButton;
+    private Button addNewLocationButton;
 
     private TextView cellInfoTextView;
     private TextView locationInfoTextView;
@@ -61,10 +63,6 @@ public class HomeFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        /********** get Gps location service LocationManager object ***********/
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
         homeFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         setUpViews();
          
@@ -76,6 +74,7 @@ public class HomeFragment extends Fragment implements LocationListener {
         showOnMapButton = (Button) homeFragmentView.findViewById(R.id.showMeOnMapButton);
         startServiceButton = (Button) homeFragmentView.findViewById(R.id.startLocationServiceButton);
         stopServiceButton = (Button) homeFragmentView.findViewById(R.id.stopLocationServiceButton);
+        addNewLocationButton = (Button) homeFragmentView.findViewById(R.id.addNewLocationButton);
 
         cellInfoTextView = (TextView) homeFragmentView.findViewById(R.id.cellInfoTextView);
         locationInfoTextView = (TextView) homeFragmentView.findViewById(R.id.locationInfoTextView);
@@ -160,6 +159,14 @@ public class HomeFragment extends Fragment implements LocationListener {
                 getActivity().stopService(new Intent(getActivity(), LocationService.class));
             }
         });
+
+        addNewLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addNewLocationIntent = new Intent(getActivity(), NewLocationActivity.class);
+                startActivity(addNewLocationIntent);
+            }
+        });
     }
 
     private Map<String, Double> getLocationFromCell(Map<String, Integer> cellInfo) {
@@ -182,28 +189,5 @@ public class HomeFragment extends Fragment implements LocationListener {
         }
 
         return locationDetails;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        this.location = location;
-
-        String str = "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude();
-        Toast.makeText(context, str, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 }

@@ -6,6 +6,7 @@ package com.android.minu.notifyme.database;
 public class LocationData {
 
     private int locationId;
+    private String locationName;
     private int cellId;
     private int lac;
     private double longitude;
@@ -15,6 +16,14 @@ public class LocationData {
 
     public int getLocationId() {
         return locationId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public void setLocationId(int locationId) {
