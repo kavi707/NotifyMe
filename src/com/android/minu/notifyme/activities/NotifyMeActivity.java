@@ -172,7 +172,7 @@ public class NotifyMeActivity extends Activity {
                 fragment = new HomeFragment(context);
                 break;
             case 1:
-                fragment = new LocationsFragment();
+                fragment = new LocationsFragment(context);
                 break;
             case 2:
                 fragment = new ContactsFragment();

@@ -35,7 +35,6 @@ public class HomeFragment extends Fragment{
     private Button showOnMapButton;
     private Button startServiceButton;
     private Button stopServiceButton;
-    private Button addNewLocationButton;
 
     private TextView cellInfoTextView;
     private TextView locationInfoTextView;
@@ -74,8 +73,6 @@ public class HomeFragment extends Fragment{
         showOnMapButton = (Button) homeFragmentView.findViewById(R.id.showMeOnMapButton);
         startServiceButton = (Button) homeFragmentView.findViewById(R.id.startLocationServiceButton);
         stopServiceButton = (Button) homeFragmentView.findViewById(R.id.stopLocationServiceButton);
-        addNewLocationButton = (Button) homeFragmentView.findViewById(R.id.addNewLocationButton);
-
         cellInfoTextView = (TextView) homeFragmentView.findViewById(R.id.cellInfoTextView);
         locationInfoTextView = (TextView) homeFragmentView.findViewById(R.id.locationInfoTextView);
 
@@ -157,14 +154,6 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 getActivity().stopService(new Intent(getActivity(), LocationService.class));
-            }
-        });
-
-        addNewLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addNewLocationIntent = new Intent(getActivity(), NewLocationActivity.class);
-                startActivity(addNewLocationIntent);
             }
         });
     }

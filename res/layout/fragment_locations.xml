@@ -16,11 +16,29 @@
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_photos"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
         android:id="@+id/imageView" />
-    
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Location"
+        android:id="@+id/addNewLocationViewButton"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignRight="@+id/txtLabel" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationsListView"
+        android:layout_below="@+id/addNewLocationViewButton"
+        android:layout_alignLeft="@+id/addNewLocationViewButton"
+        android:layout_marginTop="20dp" />
+
 
 </RelativeLayout>

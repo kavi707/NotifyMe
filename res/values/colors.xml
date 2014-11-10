@@ -9,4 +9,6 @@
     <color name="counter_text_color">#c5c4c4</color>
 
     <color name="light_blue">#ff32bcff</color>
+    <color name="normal_gray">#ff858585</color>
+    <color name="dark_gray">#ff484848</color>
 </resources>

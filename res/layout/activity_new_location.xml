@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/addNewLocationViewButton"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
@@ -174,7 +174,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:text="Name your new location"
+            android:text="Your new location"
             android:textSize="20dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
@@ -186,6 +186,17 @@
         <EditText
             android:id="@+id/locationNameEditText"
             android:hint="Name for your new location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="5dp" />
+
+        <EditText
+            android:id="@+id/locationDetailsEditText"
+            android:hint="Description for new location"
+            android:lines="2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 

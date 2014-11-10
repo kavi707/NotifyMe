@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by kavi707 on 11/1/14.
  */
@@ -20,6 +23,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String LOCATIONS_TABLE_NAME = "locations";
     public static final String LOCATION_ID = "location_id";
     public static final String LOCATION_NAME = "location_name";
+    public static final String LOCATION_DESCRIPTION = "location_description";
     public static final String CELL_ID = "cell_id";
     public static final String LAC = "lac";
     public static final String LONGITUDE = "longitude";
@@ -48,6 +52,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
         String createTableQuery = "create table " + LOCATIONS_TABLE_NAME + " (" +
                 LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT not null, " +
                 LOCATION_NAME + " text, " +
+                LOCATION_DESCRIPTION + " text, " +
                 CELL_ID + " int, " +
                 LAC + " int, " +
                 LONGITUDE + " real, " +
@@ -64,6 +69,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(LOCATION_NAME, location.getLocationName());
+        values.put(LOCATION_DESCRIPTION, location.getLocationDescription());
         values.put(CELL_ID, location.getCellId());
         values.put(LAC, location.getLac());
         values.put(LONGITUDE, location.getLongitude());
@@ -76,6 +82,43 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
         } catch (SQLiteException ex) {
             throw ex;
         }
+    }
+
+    public List<LocationData> getAllLocations() {
+
+        List<LocationData> locations = new ArrayList<LocationData>();
+        locationNotifierDb = this.getWritableDatabase();
+        LocationData getLocation = null;
+
+        try {
+            String queryString = "SELECT * FROM " + LOCATIONS_TABLE_NAME;
+            Cursor locationCursor = locationNotifierDb.rawQuery(queryString, null);
+
+            locationCursor.moveToFirst();
+
+            if (!locationCursor.isAfterLast()) {
+                do {
+                    getLocation = new LocationData();
+                    getLocation.setLocationId(locationCursor.getInt(0));
+                    getLocation.setLocationName(locationCursor.getString(1));
+                    getLocation.setLocationDescription(locationCursor.getString(2));
+                    getLocation.setCellId(locationCursor.getInt(3));
+                    getLocation.setLac(locationCursor.getInt(4));
+                    getLocation.setLongitude(locationCursor.getDouble(5));
+                    getLocation.setLatitude(locationCursor.getDouble(6));
+                    getLocation.setSecondaryCell(locationCursor.getInt(7));
+                    getLocation.setSecondaryLac(locationCursor.getInt(8));
+
+                    locations.add(getLocation);
+
+                } while (locationCursor.moveToNext());
+            }
+            locationCursor.close();
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return locations;
     }
 
     public LocationData getLocationFromCellAndLac(int cellId, int lac) {
@@ -95,12 +138,13 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
                     getLocation = new LocationData();
                     getLocation.setLocationId(locationCursor.getInt(0));
                     getLocation.setLocationName(locationCursor.getString(1));
-                    getLocation.setCellId(locationCursor.getInt(2));
-                    getLocation.setLac(locationCursor.getInt(3));
-                    getLocation.setLongitude(locationCursor.getDouble(4));
-                    getLocation.setLatitude(locationCursor.getDouble(5));
-                    getLocation.setSecondaryCell(locationCursor.getInt(6));
-                    getLocation.setSecondaryLac(locationCursor.getInt(7));
+                    getLocation.setLocationDescription(locationCursor.getString(2));
+                    getLocation.setCellId(locationCursor.getInt(3));
+                    getLocation.setLac(locationCursor.getInt(4));
+                    getLocation.setLongitude(locationCursor.getDouble(5));
+                    getLocation.setLatitude(locationCursor.getDouble(6));
+                    getLocation.setSecondaryCell(locationCursor.getInt(7));
+                    getLocation.setSecondaryLac(locationCursor.getInt(8));
                 } while (locationCursor.moveToNext());
             }
             locationCursor.close();

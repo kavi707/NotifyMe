@@ -7,6 +7,7 @@ public class LocationData {
 
     private int locationId;
     private String locationName;
+    private String locationDescription;
     private int cellId;
     private int lac;
     private double longitude;
@@ -18,6 +19,10 @@ public class LocationData {
         return locationId;
     }
 
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
     public String getLocationName() {
         return locationName;
     }
@@ -26,8 +31,12 @@ public class LocationData {
         this.locationName = locationName;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
     }
 
     public int getCellId() {

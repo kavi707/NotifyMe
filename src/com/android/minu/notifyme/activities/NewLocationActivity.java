@@ -36,6 +36,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
     private TextView latitudeTextView;
 
     private EditText locationNameEditText;
+    private EditText locationDetailsEditText;
 
     private Button addNewLocationButton;
     private Button refreshButton;
@@ -69,6 +70,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
         latitudeTextView = (TextView) findViewById(R.id.latitudeTextView);
 
         locationNameEditText = (EditText) findViewById(R.id.locationNameEditText);
+        locationDetailsEditText = (EditText) findViewById(R.id.locationDetailsEditText);
 
         addNewLocationButton = (Button) findViewById(R.id.addLocationButton);
         refreshButton = (Button) findViewById(R.id.refreshButton);
@@ -89,6 +91,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
                 String latitude = latitudeTextView.getText().toString();
                 String longitude = longitudeTextView.getText().toString();
                 String locationName = locationNameEditText.getText().toString();
+                String locationDescription = locationDetailsEditText.getText().toString();
 
                 if (isLocationAlreadySaved) {
                     Toast.makeText(context, "Current location is already saved in application", Toast.LENGTH_LONG).show();
@@ -102,6 +105,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
 
                             LocationData locationData = new LocationData();
                             locationData.setLocationName(locationName);
+                            locationData.setLocationDescription(locationDescription);
                             locationData.setCellId(Integer.parseInt(cellId));
                             locationData.setLac(Integer.parseInt(lac));
                             locationData.setLatitude(Double.parseDouble(latitude));
@@ -110,6 +114,8 @@ public class NewLocationActivity extends Activity implements LocationListener {
                             localDatabaseSQLiteOpenHelper.saveNewLocationData(locationData);
 
                             Toast.makeText(context, "Added new location to application", Toast.LENGTH_LONG).show();
+
+                            finish();
                         }
                     }
                 }
@@ -155,13 +161,6 @@ public class NewLocationActivity extends Activity implements LocationListener {
                     // Saved new initLocation from GPS
                     logAndLatInfo.put("log", getLocation.getLongitude());
                     logAndLatInfo.put("lat", getLocation.getLatitude());
-
-                    LocationData newLocation = new LocationData();
-                    newLocation.setCellId(cellInfo.get("cellId"));
-                    newLocation.setLac(cellInfo.get("lac"));
-                    newLocation.setLongitude(getLocation.getLongitude());
-                    newLocation.setLatitude(getLocation.getLatitude());
-                    localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
                 } else {
                     // Couldn't find initLocation from GPS. Try from cell tracking
                     if (activityUserPermissionServices.isOnline(NewLocationActivity.this))
@@ -216,15 +215,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
         // Grep the location params from Google APIs
         locationDetails = locatorCalls.getLogAndLatLocations(cellInfo.get("cellId"), cellInfo.get("lac"));
 
-        if (locationDetails.get("log") != 0.0) {
-            // Save new location details to local database
-            LocationData newLocation = new LocationData();
-            newLocation.setCellId(cellInfo.get("cellId"));
-            newLocation.setLac(cellInfo.get("lac"));
-            newLocation.setLongitude(locationDetails.get("log"));
-            newLocation.setLatitude(locationDetails.get("lat"));
-            localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
-        } else {
+        if (locationDetails.get("log") == 0.0) {
             Toast.makeText(context, "Couldn't find location", Toast.LENGTH_LONG).show();
         }
 
