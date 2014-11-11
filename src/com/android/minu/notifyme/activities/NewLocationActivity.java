@@ -173,6 +173,9 @@ public class NewLocationActivity extends Activity implements LocationListener {
                 if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                     logAndLatInfo = getLocationFromCell(cellInfo);
                 } else {
+                    logAndLatInfo.put("log", 0.0);
+                    logAndLatInfo.put("lat", 0.0);
+
                     // leads to the settings because there is no last known initLocation
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);

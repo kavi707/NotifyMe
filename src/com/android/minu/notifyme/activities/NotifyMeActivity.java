@@ -175,7 +175,7 @@ public class NotifyMeActivity extends Activity {
                 fragment = new LocationsFragment(context);
                 break;
             case 2:
-                fragment = new ContactsFragment();
+                fragment = new ContactsFragment(context);
                 break;
 
             default:

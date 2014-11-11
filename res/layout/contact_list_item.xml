@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.minu.notifyme.views.ContactListItem xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/bg_selector"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Contact Name"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:typeface="normal"
+        android:textColor="@color/dark_gray"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="center_vertical"
+        android:id="@+id/contactItemNameTextView"/>
+
+    <TextView
+        android:text="Phone Numbers"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:typeface="normal"
+        android:gravity="center_vertical"
+        android:textColor="@color/normal_gray"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:id="@+id/contactItemDetailsTextView"/>
+
+</com.android.minu.notifyme.views.ContactListItem>

@@ -31,6 +31,11 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String SECONDARY_CELL = "secondary_cell";
     public static final String SECONDARY_LAC = "secondary_lac";
 
+    public static final String CONTACTS_TABLE_NAME = "contacts";
+    public static final String CONTACT_ID = "contact_id";
+    public static final String CONTACT_NAME = "contact_name";
+    public static final String CONTACT_NUMBER = "contact_number";
+
     private Context dbContext;
 
     public LocalDatabaseSQLiteOpenHelper(Context context) {
@@ -41,6 +46,7 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         createLocationsTable(sqLiteDatabase);
+        createContactTable(sqLiteDatabase);
     }
 
     @Override
@@ -62,6 +68,19 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
                 ");";
         sqLiteDatabase.execSQL(createTableQuery);
     }
+
+    private void createContactTable(SQLiteDatabase sqLiteDatabase) {
+        String createTableQuery = "create table " + CONTACTS_TABLE_NAME + " (" +
+                CONTACT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT not null, " +
+                CONTACT_NAME + " text, " +
+                CONTACT_NUMBER + " text " +
+                ");";
+        sqLiteDatabase.execSQL(createTableQuery);
+    }
+
+    /************************/
+    /*Location Table methods*/
+    /************************/
 
     public void saveNewLocationData(LocationData location) {
         locationNotifierDb = this.getWritableDatabase();
@@ -153,5 +172,55 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
         }
 
         return getLocation;
+    }
+
+
+    /***********************/
+    /*Contacts table method*/
+    /***********************/
+
+    public void saveNewContact(ContactData contactData) {
+        locationNotifierDb = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(CONTACT_NAME, contactData.getContactName());
+        values.put(CONTACT_NUMBER, contactData.getContactNumberData());
+
+        try {
+            locationNotifierDb.insert(CONTACTS_TABLE_NAME, null, values);
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+    }
+
+    public List<ContactData> getAllContacts () {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        locationNotifierDb = this.getWritableDatabase();
+        ContactData getContact = null;
+
+        try {
+            String queryString = "SELECT * FROM " + CONTACTS_TABLE_NAME;
+            Cursor contactCursor = locationNotifierDb.rawQuery(queryString, null);
+
+            contactCursor.moveToFirst();
+
+            if (!contactCursor.isAfterLast()) {
+                do {
+                    getContact = new ContactData();
+                    getContact.setContactId(contactCursor.getInt(0));
+                    getContact.setContactName(contactCursor.getString(1));
+                    getContact.setContactNumberData(contactCursor.getString(2));
+
+                    contacts.add(getContact);
+
+                } while (contactCursor.moveToNext());
+            }
+            contactCursor.close();
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return contacts;
     }
 }

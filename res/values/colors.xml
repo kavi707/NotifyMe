@@ -11,4 +11,7 @@
     <color name="light_blue">#ff32bcff</color>
     <color name="normal_gray">#ff858585</color>
     <color name="dark_gray">#ff484848</color>
+
+    <color name="pressed_color">#ff2dff35</color>
+    <color name="default_color">#ffffffff</color>
 </resources>
