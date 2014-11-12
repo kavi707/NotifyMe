@@ -1,10 +1,12 @@
 package com.android.minu.notifyme.fragments;
 
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.minu.notifyme.R;
-import com.android.minu.notifyme.activities.NewLocationActivity;
+import com.android.minu.notifyme.activities.NotifyMeActivity;
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
 import com.android.minu.notifyme.database.LocationData;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
@@ -39,7 +41,7 @@ public class HomeFragment extends Fragment{
     private TextView cellInfoTextView;
     private TextView locationInfoTextView;
 
-    //private Context context = getActivity().getApplicationContext();
+    private NotificationManager mNotificationManager;
     private Context context;
     private LocationManager locationManager;
     private Location location;
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment{
     public HomeFragment(Context context){
         this.context = context;
         this.localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
+        this.mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
 	@Override
@@ -147,6 +150,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 getActivity().startService(new Intent(getActivity(), LocationService.class));
+                showServiceNotification();
             }
         });
 
@@ -154,6 +158,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 getActivity().stopService(new Intent(getActivity(), LocationService.class));
+                mNotificationManager.cancel(1);
             }
         });
     }
@@ -178,5 +183,16 @@ public class HomeFragment extends Fragment{
         }
 
         return locationDetails;
+    }
+
+    /**
+     * Showing icon for location service starting
+     */
+    private void showServiceNotification(){
+        Notification notification = new Notification(R.drawable.ic_locator, "NotifyMe service started", System.currentTimeMillis());
+        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), NotifyMeActivity.class), PendingIntent.FLAG_NO_CREATE);
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+        notification.setLatestEventInfo(getActivity(), "NotifyMe", "Searching your location", contentIntent);
+        mNotificationManager.notify(1, notification);
     }
 }

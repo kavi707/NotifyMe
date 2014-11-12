@@ -18,6 +18,7 @@ import com.android.minu.notifyme.R;
 import com.android.minu.notifyme.adapters.ContactItemAdapter;
 import com.android.minu.notifyme.database.ContactData;
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
+import com.android.minu.notifyme.fragments.ContactsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,61 +49,14 @@ public class SelectContactActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-        String _ID = ContactsContract.Contacts._ID;
-        String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
-        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
-
-        Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
-        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-
-        ContentResolver contentResolver = getContentResolver();
-
-        Cursor cursor = contentResolver.query(CONTENT_URI, null,null, null, null);
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            ContactData contactData;
-            while (cursor.moveToNext()) {
-                contactData = new ContactData();
-                String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
-
-                String name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                contactData.setContactName(name);
-
-                String phoneNumber = "";
-                String finalPhoneString = "";
-                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
-
-                if (hasPhoneNumber > 0) {
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
-                    while (phoneCursor.moveToNext()) {
-                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        if (finalPhoneString.equals("")) {
-                            finalPhoneString = finalPhoneString + phoneNumber;
-                        } else {
-                            finalPhoneString = finalPhoneString + "," + phoneNumber;
-                        }
-                    }
-                    contactData.setContactNumberData(finalPhoneString);
-                    phoneCursor.close();
-                }
-
-                contactDataList.add(contactData);
-            }
-
-            if (contactDataList.size() != 0) {
-                loadingProgressBar.setVisibility(View.INVISIBLE);
-                contactItemAdapter = new ContactItemAdapter(contactDataList, context);
-                allContactListView.setAdapter(contactItemAdapter);
-            }
-
-        } else {
+        contactDataList = ContactsFragment.getContactDataList();
+        if (contactDataList.size() != 0) {
             loadingProgressBar.setVisibility(View.INVISIBLE);
+            contactItemAdapter = new ContactItemAdapter(contactDataList, context);
+            allContactListView.setAdapter(contactItemAdapter);
+        } else {
             Toast.makeText(context, "No contact found in the device", Toast.LENGTH_LONG).show();
         }
-        cursor.close();
     }
 
     private void setUpViews() {
