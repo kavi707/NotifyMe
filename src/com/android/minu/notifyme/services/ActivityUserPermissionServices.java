@@ -15,12 +15,12 @@ public class ActivityUserPermissionServices {
 
     /**
      * check the internet connection in the device for running application
-     * @param activity
+     * @param context
      * @return boolean
      */
-    public boolean isOnline(Activity activity) {
+    public boolean isOnline(Context context) {
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {

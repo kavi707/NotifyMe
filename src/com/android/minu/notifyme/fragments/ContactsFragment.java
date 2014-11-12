@@ -92,7 +92,7 @@ public class ContactsFragment extends Fragment {
             String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
             String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
 
-            ContentResolver contentResolver = getActivity().getContentResolver();
+            ContentResolver contentResolver = context.getContentResolver();
 
             Cursor cursor = contentResolver.query(CONTENT_URI, null,null, null, null);
 
