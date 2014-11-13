@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.minu.notifyme.R;
@@ -24,6 +25,7 @@ public class LocationsFragment extends Fragment {
 
     private Button addNewLocationViewButton;
     private ListView locationsListView;
+    private ImageView locationsImageView;
 
     private LocationItemAdapter locationItemAdapter;
     private Context context;
@@ -49,6 +51,9 @@ public class LocationsFragment extends Fragment {
     private void setUpViews() {
         addNewLocationViewButton = (Button) locationFragmentView.findViewById(R.id.addNewLocationViewButton);
         locationsListView = (ListView) locationFragmentView.findViewById(R.id.locationsListView);
+        locationsImageView = (ImageView) locationFragmentView.findViewById(R.id.locationImageView);
+
+        loadLocationsToListView();
 
         addNewLocationViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,15 @@ public class LocationsFragment extends Fragment {
             }
         });
 
+        locationsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadLocationsToListView();
+            }
+        });
+    }
+
+    private void loadLocationsToListView() {
         List<LocationData> locationDataList = localDatabaseSQLiteOpenHelper.getAllLocations();
         if (locationDataList.size() != 0) {
             locationItemAdapter = new LocationItemAdapter(locationDataList, context);

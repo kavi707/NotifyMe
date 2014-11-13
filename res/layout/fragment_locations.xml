@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:textSize="35dp"
         android:text="Locations"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignBottom="@+id/locationImageView"
+        android:layout_toRightOf="@+id/locationImageView"
         android:layout_marginLeft="20dp" />
 
     <ImageView android:layout_width="wrap_content"
@@ -20,16 +20,16 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
-        android:id="@+id/imageView" />
+        android:id="@+id/locationImageView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add New Location"
         android:id="@+id/addNewLocationViewButton"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/locationImageView"
         android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignLeft="@+id/locationImageView"
         android:layout_alignRight="@+id/txtLabel" />
 
     <ListView

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class ContactsFragment extends Fragment {
 
     private Button addNewContactsViewButton;
     private ListView selectedContactsListView;
+    private ImageView contactsImageView;
     private ProgressDialog progress;
 
     private Context context;
@@ -67,6 +69,7 @@ public class ContactsFragment extends Fragment {
 
         addNewContactsViewButton = (Button) contactsFragmentView.findViewById(R.id.addNewContactsViewButton);
         selectedContactsListView = (ListView) contactsFragmentView.findViewById(R.id.selectedContactsListView);
+        contactsImageView = (ImageView) contactsFragmentView.findViewById(R.id.contactsImageView);
 
         addNewContactsViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +96,17 @@ public class ContactsFragment extends Fragment {
             }
         });
 
+        contactsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadContactsToListView();
+            }
+        });
+
+        loadContactsToListView();
+    }
+
+    private void loadContactsToListView() {
         List<ContactData> contactDataList = localDatabaseSQLiteOpenHelper.getAllContacts();
         if (contactDataList.size() != 0) {
             contactItemAdapter = new ContactItemAdapter(contactDataList, context);
