@@ -1,6 +1,7 @@
 package com.android.minu.notifyme.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.minu.notifyme.R;
@@ -26,6 +28,8 @@ import com.android.minu.notifyme.database.LocationData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ContactsFragment extends Fragment {
 
@@ -33,6 +37,7 @@ public class ContactsFragment extends Fragment {
 
     private Button addNewContactsViewButton;
     private ListView selectedContactsListView;
+    private ProgressDialog progress;
 
     private Context context;
     private ContactItemAdapter contactItemAdapter;
@@ -66,6 +71,23 @@ public class ContactsFragment extends Fragment {
         addNewContactsViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*progress = new ProgressDialog(context);
+                progress.setTitle("Loading");
+                progress.setMessage("Wait while loading the contacts from phone");
+                progress.show();
+
+                final Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        progress.dismiss();
+                        Intent selectContactIntent = new Intent(getActivity(), SelectContactActivity.class);
+                        startActivity(selectContactIntent);
+                        timer.cancel();
+                    }
+                }, 10000);*/
+
                 Intent selectContactIntent = new Intent(getActivity(), SelectContactActivity.class);
                 startActivity(selectContactIntent);
             }
