@@ -94,13 +94,13 @@ public class NewLocationActivity extends Activity implements LocationListener {
                 String locationDescription = locationDetailsEditText.getText().toString();
 
                 if (isLocationAlreadySaved) {
-                    Toast.makeText(context, "Current location is already saved in application", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Current location is already saved in application", Toast.LENGTH_SHORT).show();
                 } else {
                     if (latitude.equals("0.0")) {
-                        Toast.makeText(context, "Couldn't find exact location, please refresh", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Couldn't find exact location, please refresh", Toast.LENGTH_SHORT).show();
                     } else {
                         if (locationName.equals(null) || locationName.equals("")) {
-                            Toast.makeText(context, "Please add name to your new location", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Please add name to your new location", Toast.LENGTH_SHORT).show();
                         } else {
 
                             LocationData locationData = new LocationData();
@@ -113,7 +113,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
 
                             localDatabaseSQLiteOpenHelper.saveNewLocationData(locationData);
 
-                            Toast.makeText(context, "Added new location to application", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Added new location to application", Toast.LENGTH_SHORT).show();
 
                             finish();
                         }
@@ -166,7 +166,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
                     if (activityUserPermissionServices.isOnline(NewLocationActivity.this))
                         logAndLatInfo = getLocationFromCell(cellInfo);
                     else
-                        Toast.makeText(context, "Device is in offline", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 // GPS not available. Try initLocation from cell tracking
@@ -219,7 +219,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
         locationDetails = locatorCalls.getLogAndLatLocations(cellInfo.get("cellId"), cellInfo.get("lac"));
 
         if (locationDetails.get("log") == 0.0) {
-            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
         }
 
         return locationDetails;

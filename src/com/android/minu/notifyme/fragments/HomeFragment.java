@@ -39,7 +39,9 @@ public class HomeFragment extends Fragment{
     private Button stopServiceButton;
 
     private TextView cellInfoTextView;
+    private TextView lacInfoTextView;
     private TextView locationInfoTextView;
+    private TextView locationLongitudeInfoTextView;
 
     private NotificationManager mNotificationManager;
     private Context context;
@@ -77,7 +79,9 @@ public class HomeFragment extends Fragment{
         startServiceButton = (Button) homeFragmentView.findViewById(R.id.startLocationServiceButton);
         stopServiceButton = (Button) homeFragmentView.findViewById(R.id.stopLocationServiceButton);
         cellInfoTextView = (TextView) homeFragmentView.findViewById(R.id.cellInfoTextView);
+        lacInfoTextView = (TextView) homeFragmentView.findViewById(R.id.lacInfoTextView);
         locationInfoTextView = (TextView) homeFragmentView.findViewById(R.id.locationInfoTextView);
+        locationLongitudeInfoTextView = (TextView) homeFragmentView.findViewById(R.id.locationLongitudeInfoTextView);
 
         getLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,20 +115,22 @@ public class HomeFragment extends Fragment{
                             if (activityUserPermissionServices.isOnline(getActivity()))
                                 logAndLatInfo = getLocationFromCell(cellInfo);
                             else
-                                Toast.makeText(context, "Device is in offline", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // GPS not available. Try location from cell tracking
                         if (activityUserPermissionServices.isOnline(getActivity()))
                             logAndLatInfo = getLocationFromCell(cellInfo);
                         else
-                            Toast.makeText(context, "Device is in offline", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 myLocationInfo = logAndLatInfo;
-                cellInfoTextView.setText("CellId: " + cellInfo.get("cellId") + "\nLac: " + cellInfo.get("lac"));
-                locationInfoTextView.setText("Longitude: " + logAndLatInfo.get("log") + "\nLatitude: " + logAndLatInfo.get("lat"));
+                cellInfoTextView.setText("CellId: " + cellInfo.get("cellId"));
+                lacInfoTextView.setText("Lac: " + cellInfo.get("lac"));
+                locationInfoTextView.setText("Latitude: " + logAndLatInfo.get("lat"));
+                locationLongitudeInfoTextView.setText("Longitude: " + logAndLatInfo.get("log"));
                 Log.d("CELL", "cell ID: " + cellInfo.get("cellId") + " Lac: " + cellInfo.get("lac"));
                 Log.d("LOCATIONS", "Log: " + logAndLatInfo.get("log") + " Lat: " + logAndLatInfo.get("lat"));
             }
@@ -141,7 +147,7 @@ public class HomeFragment extends Fragment{
                             Uri.parse(uriString));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Can't show location. Clear location not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Can't show location. Clear location not found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -179,7 +185,7 @@ public class HomeFragment extends Fragment{
             newLocation.setLatitude(locationDetails.get("lat"));
             localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
         } else {
-            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
         }
 
         return locationDetails;

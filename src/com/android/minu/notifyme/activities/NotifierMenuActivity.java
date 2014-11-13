@@ -96,14 +96,14 @@ public class NotifierMenuActivity extends Activity implements LocationListener {
                             if (activityUserPermissionServices.isOnline(NotifierMenuActivity.this))
                                 logAndLatInfo = getLocationFromCell(cellInfo);
                             else
-                                Toast.makeText(context, "Device is in offline", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // GPS not available. Try location from cell tracking
                         if (activityUserPermissionServices.isOnline(NotifierMenuActivity.this))
                             logAndLatInfo = getLocationFromCell(cellInfo);
                         else
-                            Toast.makeText(context, "Device is in offline", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -140,7 +140,7 @@ public class NotifierMenuActivity extends Activity implements LocationListener {
         this.location = location;
 
         String str = "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude();
-        Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), str, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -151,13 +151,13 @@ public class NotifierMenuActivity extends Activity implements LocationListener {
     @Override
     public void onProviderEnabled(String provider) {
         /******** Called when User on Gps  *********/
-        Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
         /******** Called when User off Gps *********/
-        Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_SHORT).show();
     }
 
     private Map<String, Double> getLocationFromCell(Map<String, Integer> cellInfo) {
@@ -176,7 +176,7 @@ public class NotifierMenuActivity extends Activity implements LocationListener {
             newLocation.setLatitude(locationDetails.get("lat"));
             localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
         } else {
-            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
         }
 
         return locationDetails;
