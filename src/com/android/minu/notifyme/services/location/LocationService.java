@@ -14,9 +14,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
+import com.android.minu.notifyme.database.LocationData;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,6 +32,7 @@ public class LocationService extends Service implements LocationListener {
     private Map<String, Integer> cellInfo = new HashMap<String, Integer>();
     private Map<String, Double> locationInfo = new HashMap<String, Double>();
     private boolean isGPSOn = false;
+    private List<LocationData> savedLocations = new ArrayList<LocationData>();
 
     private LocationManager locationManager;
     private String provider;
@@ -67,6 +71,8 @@ public class LocationService extends Service implements LocationListener {
 
         Toast.makeText(this, "NotifyMe LocationService Started", Toast.LENGTH_SHORT).show();
         Log.d("LocationService:onStart / @Overide", "NotifyMe LocationService Started");
+
+        savedLocations = localDatabaseSQLiteOpenHelper.getAllLocations();
 
         startTimer();
     }
@@ -109,7 +115,14 @@ public class LocationService extends Service implements LocationListener {
                 handler.post(new Runnable() {
                     public void run() {
                         locationInfo = refreshCurrentLocation();
-                        Log.d(">>>>>>>>>>>>>>>>>>>>>>> ", "Longitude: " + locationInfo.get("log") + " Latitude: " + locationInfo.get("lat"));
+
+                        for (LocationData savedLocation : savedLocations) {
+                            if (savedLocation.getLatitude() == locationInfo.get("lat") && savedLocation.getLongitude() == locationInfo.get("log")) {
+                                Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "location matched");
+                                Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", savedLocation.getLocationName());
+                            }
+                        }
+//                        Log.d(">>>>>>>>>>>>>>>>>>>>>>> ", "Longitude: " + locationInfo.get("log") + " Latitude: " + locationInfo.get("lat"));
                     }
                 });
             }

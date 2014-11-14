@@ -129,8 +129,8 @@ public class HomeFragment extends Fragment{
                 myLocationInfo = logAndLatInfo;
                 cellInfoTextView.setText("CellId: " + cellInfo.get("cellId"));
                 lacInfoTextView.setText("Lac: " + cellInfo.get("lac"));
-                locationInfoTextView.setText("Latitude: " + logAndLatInfo.get("lat"));
-                locationLongitudeInfoTextView.setText("Longitude: " + logAndLatInfo.get("log"));
+                locationInfoTextView.setText(String.valueOf(logAndLatInfo.get("lat")));
+                locationLongitudeInfoTextView.setText(String.valueOf(logAndLatInfo.get("log")));
                 Log.d("CELL", "cell ID: " + cellInfo.get("cellId") + " Lac: " + cellInfo.get("lac"));
                 Log.d("LOCATIONS", "Log: " + logAndLatInfo.get("log") + " Lat: " + logAndLatInfo.get("lat"));
             }

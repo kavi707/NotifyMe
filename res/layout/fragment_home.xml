@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:text="test icon"
+                android:text="Cell ID"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/cellInfoTextView"
                 android:layout_gravity="left|center_vertical" />
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:text="test icon"
+                android:text="L.A.C"
                 android:layout_marginRight="40dp"
                 android:id="@+id/lacInfoTextView"
                 android:layout_gravity="right|center_vertical" />
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
-                android:text="test icon"
+                android:text="Latitude"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/locationInfoTextView"
                 android:layout_gravity="left|center_vertical" />
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
-                android:text="test icon"
+                android:text="Longitude"
                 android:layout_marginRight="40dp"
                 android:id="@+id/locationLongitudeInfoTextView"
                 android:layout_gravity="right|center_vertical" />
