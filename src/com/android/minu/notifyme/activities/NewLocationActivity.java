@@ -147,39 +147,49 @@ public class NewLocationActivity extends Activity implements LocationListener {
 
         LocationData savedLocation = localDatabaseSQLiteOpenHelper.getLocationFromCellAndLac(cellInfo.get("cellId"), cellInfo.get("lac"));
 
-        if (savedLocation != null) {
-            isLocationAlreadySaved = true;
-            // Grep the initLocation params from local database
-            logAndLatInfo.put("log", savedLocation.getLongitude());
-            logAndLatInfo.put("lat", savedLocation.getLatitude());
-        } else {
-            if (isGPSOn) {
-                //Check with GPS location listener
-                localLocationListener();
 
-                if (getLocation != null) {
-                    // Saved new initLocation from GPS
-                    logAndLatInfo.put("log", getLocation.getLongitude());
-                    logAndLatInfo.put("lat", getLocation.getLatitude());
-                } else {
-                    // Couldn't find initLocation from GPS. Try from cell tracking
-                    if (activityUserPermissionServices.isOnline(NewLocationActivity.this))
-                        logAndLatInfo = getLocationFromCell(cellInfo);
-                    else
-                        Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
+        if (isGPSOn) {
+            //Check with GPS location listener
+            localLocationListener();
+
+            if (getLocation != null) {
+                // Saved new initLocation from GPS
+                logAndLatInfo.put("log", getLocation.getLongitude());
+                logAndLatInfo.put("lat", getLocation.getLatitude());
+
+                if (savedLocation != null) {
+                    if (getLocation.getLongitude() == savedLocation.getLongitude() && getLocation.getLatitude() == savedLocation.getLatitude()) {
+                        isLocationAlreadySaved = true;
+                    }
                 }
             } else {
-                // GPS not available. Try initLocation from cell tracking
+                // Couldn't find initLocation from GPS. Try from cell tracking
                 if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                     logAndLatInfo = getLocationFromCell(cellInfo);
-                } else {
-                    logAndLatInfo.put("log", 0.0);
-                    logAndLatInfo.put("lat", 0.0);
-
-                    // leads to the settings because there is no last known initLocation
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
+                    if (savedLocation != null) {
+                        if (logAndLatInfo.get("log") == savedLocation.getLongitude() && logAndLatInfo.get("lat") == savedLocation.getLatitude()) {
+                            isLocationAlreadySaved = true;
+                        }
+                    }
+                } else
+                    Toast.makeText(context, "Device is in offline", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // GPS not available. Try initLocation from cell tracking
+            if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
+                logAndLatInfo = getLocationFromCell(cellInfo);
+                if (savedLocation != null) {
+                    if (logAndLatInfo.get("log") == savedLocation.getLongitude() && logAndLatInfo.get("lat") == savedLocation.getLatitude()) {
+                        isLocationAlreadySaved = true;
+                    }
                 }
+            } else {
+                logAndLatInfo.put("log", 0.0);
+                logAndLatInfo.put("lat", 0.0);
+
+                // leads to the settings because there is no last known initLocation
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
             }
         }
 
