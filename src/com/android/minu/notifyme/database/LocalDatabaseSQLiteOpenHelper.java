@@ -174,6 +174,20 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
         return getLocation;
     }
 
+    public long deleteLocationFromLocationId(int locationId) {
+
+        long deleteStatus = 0;
+        locationNotifierDb = this.getWritableDatabase();
+
+        try {
+            String deleteQry = LOCATION_ID + " = " + locationId;
+            deleteStatus = locationNotifierDb.delete(LOCATIONS_TABLE_NAME, deleteQry, null);
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return deleteStatus;
+    }
 
     /***********************/
     /*Contacts table method*/

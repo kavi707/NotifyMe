@@ -103,13 +103,6 @@ public class HomeFragment extends Fragment{
                             // Saved new location from GPS
                             logAndLatInfo.put("log", location.getLongitude());
                             logAndLatInfo.put("lat", location.getLatitude());
-
-                            LocationData newLocation = new LocationData();
-                            newLocation.setCellId(cellInfo.get("cellId"));
-                            newLocation.setLac(cellInfo.get("lac"));
-                            newLocation.setLongitude(location.getLongitude());
-                            newLocation.setLatitude(location.getLatitude());
-                            localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
                         } else {
                             // Couldn't find location from GPS. Try from cell tracking
                             if (activityUserPermissionServices.isOnline(getActivity()))
@@ -176,14 +169,6 @@ public class HomeFragment extends Fragment{
 
         if (locationDetails.get("log") != 0.0) {
             locationInfoTextView.setText("Longitude: " + locationDetails.get("log") + " Latitude: " + locationDetails.get("lat"));
-
-            // Save new location details to local database
-            LocationData newLocation = new LocationData();
-            newLocation.setCellId(cellInfo.get("cellId"));
-            newLocation.setLac(cellInfo.get("lac"));
-            newLocation.setLongitude(locationDetails.get("log"));
-            newLocation.setLatitude(locationDetails.get("lat"));
-            localDatabaseSQLiteOpenHelper.saveNewLocationData(newLocation);
         } else {
             Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
         }
