@@ -13,9 +13,11 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.minu.notifyme.database.ContactData;
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
 import com.android.minu.notifyme.database.LocationData;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
+import com.android.minu.notifyme.services.Sms;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,9 @@ public class LocationService extends Service implements LocationListener {
     private Map<String, Double> locationInfo = new HashMap<String, Double>();
     private boolean isGPSOn = false;
     private List<LocationData> savedLocations = new ArrayList<LocationData>();
+    private List<ContactData> savedContacts = new ArrayList<ContactData>();
+    private int timeCounter = 0;
+    private String sentLastLocation = "";
 
     private LocationManager locationManager;
     private String provider;
@@ -44,6 +49,7 @@ public class LocationService extends Service implements LocationListener {
     private LocatorCalls locatorCalls = new LocatorCalls();
     private LocalDatabaseSQLiteOpenHelper localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
     private ActivityUserPermissionServices activityUserPermissionServices = new ActivityUserPermissionServices();
+    private Sms sms = new Sms();
 
     private Timer locationTimer;
     private TimerTask locationTimeTask;
@@ -73,6 +79,7 @@ public class LocationService extends Service implements LocationListener {
         Log.d("LocationService:onStart / @Overide", "NotifyMe LocationService Started");
 
         savedLocations = localDatabaseSQLiteOpenHelper.getAllLocations();
+        savedContacts = localDatabaseSQLiteOpenHelper.getAllContacts();
 
         startTimer();
     }
@@ -95,7 +102,7 @@ public class LocationService extends Service implements LocationListener {
         initializeLocationTimerTask();
 
         //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        locationTimer.schedule(locationTimeTask, 5000, 10000); //
+        locationTimer.schedule(locationTimeTask, 5000, 60000); //
     }
 
     private void stopTimerTask() {
@@ -114,15 +121,70 @@ public class LocationService extends Service implements LocationListener {
                 //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
+
+                        // Increase time counter
+                        timeCounter ++;
+
                         locationInfo = refreshCurrentLocation();
+                        boolean longitudeMatching = false;
+                        boolean latitudeMatching = false;
 
                         for (LocationData savedLocation : savedLocations) {
-                            if (savedLocation.getLatitude() == locationInfo.get("lat") && savedLocation.getLongitude() == locationInfo.get("log")) {
-                                Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "location matched");
-                                Log.d(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", savedLocation.getLocationName());
+
+                            longitudeMatching = false;
+                            latitudeMatching = false;
+
+                            //check the latitude
+                            if (locationInfo.get("lat") < (savedLocation.getLatitude() + 0.01) &&
+                                    locationInfo.get("lat") > (savedLocation.getLatitude() - 0.01)) {
+                                Log.d("LocationService:initializeLocationTimerTask / Current Latitude: ", String.valueOf(locationInfo.get("lat")));
+                                Log.d("LocationService:initializeLocationTimerTask / Saved location Latitude: ", String.valueOf(savedLocation.getLatitude()));
+
+                                latitudeMatching = true;
+                            } else {
+                                latitudeMatching = false;
+                            }
+
+                            //check the longitude
+                            if (locationInfo.get("log") < (savedLocation.getLongitude() + 0.01) &&
+                                    locationInfo.get("log") > (savedLocation.getLongitude() - 0.01)) {
+
+                                Log.d("LocationService:initializeLocationTimerTask / Current Longitude: ", String.valueOf(locationInfo.get("log")));
+                                Log.d("LocationService:initializeLocationTimerTask / Saved location Longitude: ", String.valueOf(savedLocation.getLongitude()));
+
+                                longitudeMatching = true;
+                            } else {
+                                longitudeMatching = false;
+                            }
+
+                            if (latitudeMatching && longitudeMatching) {
+                                Log.d("LocationService:initializeLocationTimerTask / Found Location Name: ", "Location: " + savedLocation.getLocationName());
+
+                                String msg;
+                                String number;
+
+                                if (!sentLastLocation.equals(savedLocation.getLocationName())) {
+                                    timeCounter = 0;
+                                    sentLastLocation = savedLocation.getLocationName();
+                                    //send the new location to selected contacts
+                                    //TODO: This number must be selected from selected contact list
+                                    msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
+                                    number = "0713063362";
+                                    sms.SendSms(number, msg, context);
+                                    Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (timeCounter > 60) {
+                                        timeCounter = 0;
+                                        //send the location to selected contacts
+                                        msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
+                                        //TODO: This number must be selected from selected contact list
+                                        number = "0713063362";
+                                        sms.SendSms(number, msg, context);
+                                        Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                             }
                         }
-//                        Log.d(">>>>>>>>>>>>>>>>>>>>>>> ", "Longitude: " + locationInfo.get("log") + " Latitude: " + locationInfo.get("lat"));
                     }
                 });
             }
@@ -133,6 +195,9 @@ public class LocationService extends Service implements LocationListener {
 
         Map<String, Integer> cellInfo = locatorCalls.getCellInformation(context);
         Map<String, Double> logAndLatInfo = new HashMap<String, Double>();
+
+        Log.d("LocationService:refreshCurrentLocation / cell id: ", String.valueOf(cellInfo.get("cellId")));
+        Log.d("LocationService:refreshCurrentLocation / L.A.C: ", String.valueOf(cellInfo.get("lac")));
 
         if (isGPSOn) {
             //Check with GPS location listener
@@ -164,6 +229,9 @@ public class LocationService extends Service implements LocationListener {
                 Log.d("LocationService:refreshCurrentLocation / STATUS ", "Device is in offline");
             }
         }
+
+        Log.d("LocationService:refreshCurrentLocation / longitude: ", String.valueOf(logAndLatInfo.get("log")));
+        Log.d("LocationService:refreshCurrentLocation / latitude: ", String.valueOf(logAndLatInfo.get("lat")));
 
         return logAndLatInfo;
     }
