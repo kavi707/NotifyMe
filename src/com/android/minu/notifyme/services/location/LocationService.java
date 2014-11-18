@@ -160,26 +160,25 @@ public class LocationService extends Service implements LocationListener {
                             if (latitudeMatching && longitudeMatching) {
                                 Log.d("LocationService:initializeLocationTimerTask / Found Location Name: ", "Location: " + savedLocation.getLocationName());
 
-                                String msg;
-                                String number;
-
                                 if (!sentLastLocation.equals(savedLocation.getLocationName())) {
                                     timeCounter = 0;
                                     sentLastLocation = savedLocation.getLocationName();
                                     //send the new location to selected contacts
-                                    //TODO: This number must be selected from selected contact list
-                                    msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
-                                    number = "0713063362";
-                                    sms.SendSms(number, msg, context);
+                                    //msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
+                                    //number = "0713063362";
+                                    //sms.SendSms(number, msg, context);
+
+                                    sendSmsToSelectedContacts(savedLocation);
                                     Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (timeCounter > 60) {
                                         timeCounter = 0;
                                         //send the location to selected contacts
-                                        msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
-                                        //TODO: This number must be selected from selected contact list
-                                        number = "0713063362";
-                                        sms.SendSms(number, msg, context);
+                                        //msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
+                                        //number = "0713063362";
+                                        //sms.SendSms(number, msg, context);
+
+                                        sendSmsToSelectedContacts(savedLocation);
                                         Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -272,6 +271,21 @@ public class LocationService extends Service implements LocationListener {
         }
 
         return locationDetails;
+    }
+
+    private void sendSmsToSelectedContacts (LocationData savedLocation) {
+
+        String msg;
+        String number;
+
+        if (savedContacts.size() != 0) {
+            for (ContactData savedContact : savedContacts) {
+                msg = "Hey "+ savedContact.getContactName() +", Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
+                //TODO: We need to check this. QA part
+                number = savedContact.getContactNumberData().split(",")[0];
+                sms.SendSms(number, msg, context);
+            }
+        }
     }
 
     @Override
