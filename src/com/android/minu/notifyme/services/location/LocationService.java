@@ -1,5 +1,6 @@
 package com.android.minu.notifyme.services.location;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -164,20 +166,12 @@ public class LocationService extends Service implements LocationListener {
                                     timeCounter = 0;
                                     sentLastLocation = savedLocation.getLocationName();
                                     //send the new location to selected contacts
-                                    //msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
-                                    //number = "0713063362";
-                                    //sms.SendSms(number, msg, context);
-
                                     sendSmsToSelectedContacts(savedLocation);
                                     Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (timeCounter > 60) {
                                         timeCounter = 0;
                                         //send the location to selected contacts
-                                        //msg = "Hey guys, Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
-                                        //number = "0713063362";
-                                        //sms.SendSms(number, msg, context);
-
                                         sendSmsToSelectedContacts(savedLocation);
                                         Toast.makeText(context, "New SMS sent", Toast.LENGTH_SHORT).show();
                                     }
@@ -282,8 +276,15 @@ public class LocationService extends Service implements LocationListener {
             for (ContactData savedContact : savedContacts) {
                 msg = "Hey "+ savedContact.getContactName() +", Now I'm @ " + savedLocation.getLocationName() + ". Do you come to join with me?";
                 //TODO: We need to check this. QA part
-                number = savedContact.getContactNumberData().split(",")[0];
+                number = savedContact.getContactNumberData();
                 sms.SendSms(number, msg, context);
+
+                // Without reports
+                /*PendingIntent pi = PendingIntent.getActivity(this, 0,
+                        new Intent(this, LocationService.class), 0);
+
+                SmsManager sms = SmsManager.getDefault();
+                sms.sendTextMessage(number, null, msg, pi, null);*/
             }
         }
     }

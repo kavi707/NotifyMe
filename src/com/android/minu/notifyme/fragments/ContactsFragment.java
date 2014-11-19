@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
 import com.android.minu.notifyme.database.LocationData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -158,27 +161,28 @@ public class ContactsFragment extends Fragment {
                     contactData.setContactName(name);
 
                     String phoneNumber = "";
-                    String finalPhoneString = "";
                     int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
 
                     if (hasPhoneNumber > 0) {
                         Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
                         while (phoneCursor.moveToNext()) {
                             phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                            if (finalPhoneString.equals("")) {
-                                finalPhoneString = finalPhoneString + phoneNumber;
-                            } else {
-                                finalPhoneString = finalPhoneString + "," + phoneNumber;
-                            }
+                            contactData.setContactNumberData(phoneNumber);
+                            contactDataList.add(contactData);
                         }
-                        contactData.setContactNumberData(finalPhoneString);
                         phoneCursor.close();
                     }
-
-                    contactDataList.add(contactData);
                 }
 
             }
+
+            Collections.sort(contactDataList, new Comparator<ContactData>() {
+                @Override
+                public int compare(ContactData lhs, ContactData rhs) {
+                    return  lhs.getContactName().compareTo(rhs.getContactName());
+                }
+            });
+
             cursor.close();
             return null;
         }
