@@ -1,9 +1,11 @@
 package com.android.minu.notifyme.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,6 +48,8 @@ public class ContactsFragment extends Fragment {
     private ContactItemAdapter contactItemAdapter;
     private LocalDatabaseSQLiteOpenHelper localDatabaseSQLiteOpenHelper;
 
+    private AlertDialog messageBalloonAlertDialog;
+
     private static List<ContactData> contactDataList = new ArrayList<ContactData>();
 
 	public ContactsFragment(Context context){
@@ -75,22 +80,6 @@ public class ContactsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                /*progress = new ProgressDialog(context);
-                progress.setTitle("Loading");
-                progress.setMessage("Wait while loading the contacts from phone");
-                progress.show();
-
-                final Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        progress.dismiss();
-                        Intent selectContactIntent = new Intent(getActivity(), SelectContactActivity.class);
-                        startActivity(selectContactIntent);
-                        timer.cancel();
-                    }
-                }, 10000);*/
-
                 Intent selectContactIntent = new Intent(getActivity(), SelectContactActivity.class);
                 startActivity(selectContactIntent);
             }
@@ -104,6 +93,32 @@ public class ContactsFragment extends Fragment {
         });
 
         loadContactsToListView();
+
+        selectedContactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ContactData selectedContactData = (ContactData) selectedContactsListView.getItemAtPosition(position);
+
+                messageBalloonAlertDialog = new AlertDialog.Builder(context)
+                        .setTitle("Saved Location")
+                        .setMessage("Name: " + selectedContactData.getContactName() + "\n" +
+                                "Number: " + selectedContactData.getContactNumberData() + "\n")
+                        .setPositiveButton("Delete", new AlertDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                localDatabaseSQLiteOpenHelper.deleteContactFromContactId(selectedContactData.getContactId());
+                                loadContactsToListView();
+                            }
+                        })
+                        .setNeutralButton("Cancel", new AlertDialog.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                messageBalloonAlertDialog.cancel();
+                            }
+                        }).create();
+                messageBalloonAlertDialog.show();
+            }
+        });
     }
 
     private void loadContactsToListView() {

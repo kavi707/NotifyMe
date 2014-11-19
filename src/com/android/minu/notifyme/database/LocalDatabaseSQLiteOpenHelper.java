@@ -237,4 +237,19 @@ public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
 
         return contacts;
     }
+
+    public long deleteContactFromContactId(int contactId) {
+
+        long deleteStatus = 0;
+        locationNotifierDb = this.getWritableDatabase();
+
+        try {
+            String deleteQry = CONTACT_ID + " = " + contactId;
+            deleteStatus = locationNotifierDb.delete(CONTACTS_TABLE_NAME, deleteQry, null);
+        } catch (SQLiteException ex) {
+            throw ex;
+        }
+
+        return deleteStatus;
+    }
 }
