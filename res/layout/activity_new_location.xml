@@ -8,223 +8,243 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/addNewLocationViewButton"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Now I'm Here"
-            android:textColor="@color/light_blue"
-            android:textSize="25dp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/counter_text_color"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_above="@+id/addLocationButton"
+            android:layout_alignParentTop="true"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="10dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="Current Network Cell Info"
-                android:textSize="20dp" />
+                android:text="Now I'm Here"
+                android:textColor="@color/light_blue"
+                android:textSize="25dp"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Network Cell   :   "
-                    android:textSize="18dp" />
-                <TextView
-                    android:text=""
-                    android:id="@+id/cellIdTextView"
-                    android:textSize="18dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Network Lac   :   "
-                    android:textSize="18dp" />
-                <TextView
-                    android:text=""
-                    android:id="@+id/lacTextView"
-                    android:textSize="18dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="5dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/counter_text_color"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="10dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="Current Location Info"
-                android:textSize="20dp" />
+                android:background="@color/counter_text_color"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Current Network Cell Info"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Network Cell   :   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/cellIdTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Network Lac   :   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/lacTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="15dp"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/counter_text_color"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Longitude       :   "
-                    android:textSize="18dp" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp" />
+
                 <TextView
-                    android:text=""
-                    android:id="@+id/longitudeTextView"
-                    android:textSize="18dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Current Location Info"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Longitude       :   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/longitudeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Latitude          :   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/latitudeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp" />
+
             </LinearLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Your new location"
+                android:textSize="20dp" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="5dp" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/locationNameEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Latitude          :   "
-                    android:textSize="18dp" />
-                <TextView
-                    android:text=""
-                    android:id="@+id/latitudeTextView"
-                    android:textSize="18dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:hint="Name for your new location" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="5dp" />
+
+            <EditText
+                android:id="@+id/locationDetailsEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description for new location"
+                android:lines="2" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="15dp" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/addLocationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/refreshButton"
+                    android:text="Add" />
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/refreshButton"
+                    android:text="Cancel" />
+
+                <Button
+                    android:id="@+id/refreshButton"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Refresh" />
+            </RelativeLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="Your new location"
-            android:textSize="20dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="5dp" />
-
-        <EditText
-            android:id="@+id/locationNameEditText"
-            android:hint="Name for your new location"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="5dp" />
-
-        <EditText
-            android:id="@+id/locationDetailsEditText"
-            android:hint="Description for new location"
-            android:lines="2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/addLocationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/refreshButton"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/refreshButton"
-        android:text="Cancel" />
-
-    <Button
-        android:id="@+id/refreshButton"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Refresh" />
+    </ScrollView>
 </RelativeLayout>
