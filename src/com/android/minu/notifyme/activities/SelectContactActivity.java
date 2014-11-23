@@ -52,10 +52,14 @@ public class SelectContactActivity extends Activity {
     }
 
     private void setUpViews() {
+
+        // Initialise UI object from activity_select_contact.xml
         allContactListView = (ListView) findViewById(R.id.allContactListView);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loadingProgressBar);
         loadingMessageTextView = (TextView) findViewById(R.id.loadingMessageTextView);
 
+        // Separate thread to view progress dialog.
+        // Delay the view till load contacts from device
         final Thread loadingThread = new Thread() {
             @Override
             public void run() {
@@ -88,6 +92,8 @@ public class SelectContactActivity extends Activity {
         };
         loadingThread.start();
 
+        // Contact ListView click event
+        // Select contact from device and saved to application
         allContactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,6 +118,11 @@ public class SelectContactActivity extends Activity {
         });
     }
 
+    /**
+     * This method for set progress value to progress bar against the given TIMER_RUNTIME
+     * @param timePassed
+     * @return Integer progress
+     */
     private int updateProgress(final int timePassed) {
         if (null != loadingProgressBar) {
             // Ignore rounding error here
@@ -121,6 +132,10 @@ public class SelectContactActivity extends Activity {
         return 0;
     }
 
+    /**
+     * Process @ after complete the loading
+     * Open the next view intent
+     */
     private void onContinue() {
         contactDataList = ContactsFragment.getContactDataList();
         if (contactDataList.size() != 0) {

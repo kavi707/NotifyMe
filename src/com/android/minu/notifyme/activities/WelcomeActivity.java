@@ -52,31 +52,16 @@ public class WelcomeActivity extends Activity {
         super.onDestroy();
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.notifer, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
     private void setUpViews() {
 
+        // Initialise UI object from activity_welcome.xml
         progressBar = (ProgressBar) findViewById(R.id.loadingProgressBar);
         progressText = (TextView) findViewById(R.id.progressBarTitleTextView);
+
+        // Handler object for access UI objects in separate thread
         mHandler = new Handler();
 
+        // Run separate thread for show the loading progress bar
         final Thread timerThread = new Thread() {
             @Override
             public void run() {
@@ -177,6 +162,11 @@ public class WelcomeActivity extends Activity {
         timerThread.start();
     }
 
+    /**
+     * This method for set progress value to progress bar against the given TIMER_RUNTIME
+     * @param timePassed
+     * @return Integer progress
+     */
     private int updateProgress(final int timePassed) {
         if (null != progressBar) {
             // Ignore rounding error here
@@ -186,6 +176,10 @@ public class WelcomeActivity extends Activity {
         return 0;
     }
 
+    /**
+     * Process @ after complete the loading
+     * Open the next view intent
+     */
     private void onContinue() {
         Intent notifierIntent = new Intent(WelcomeActivity.this, NotifyMeActivity.class);
         startActivity(notifierIntent);

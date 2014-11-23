@@ -64,6 +64,8 @@ public class NewLocationActivity extends Activity implements LocationListener {
     }
 
     private void setUpViews() {
+
+        // Initialise UI object from activity_new_location.xml
         cellIdTextView = (TextView) findViewById(R.id.cellIdTextView);
         lacTextView = (TextView) findViewById(R.id.lacTextView);
         longitudeTextView = (TextView) findViewById(R.id.longitudeTextView);
@@ -77,10 +79,12 @@ public class NewLocationActivity extends Activity implements LocationListener {
         cancelButton = (Button) findViewById(R.id.cancelButton);
 
 
+        // Check the GPS status on the device
         isGPSOn = activityUserPermissionServices.isGPSOn(context);
 
         Log.d("GPS availability", "STATUS :" + isGPSOn);
 
+        // Check the current location details
         refreshCurrentLocation();
 
         addNewLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +141,9 @@ public class NewLocationActivity extends Activity implements LocationListener {
         });
     }
 
+    /**
+     * Check the current location, using GPS or Cell tracking
+     */
     private void refreshCurrentLocation() {
 
         Map<String, Integer> cellInfo = locatorCalls.getCellInformation(context);
@@ -197,6 +204,9 @@ public class NewLocationActivity extends Activity implements LocationListener {
         latitudeTextView.setText(logAndLatInfo.get("lat").toString());
     }
 
+    /**
+     * GPS location listener method.
+     */
     private void localLocationListener() {
 
         /********** get Gps location service LocationManager object ***********/
@@ -223,6 +233,11 @@ public class NewLocationActivity extends Activity implements LocationListener {
         locationManager.requestLocationUpdates(provider, 200, 1, this);
     }
 
+    /**
+     * Search location from Cell tracking
+     * @param cellInfo
+     * @return Map<String, Double> locationDetails
+     */
     private Map<String, Double> getLocationFromCell(Map<String, Integer> cellInfo) {
         Map<String, Double> locationDetails;
         // Grep the location params from Google APIs
@@ -234,6 +249,9 @@ public class NewLocationActivity extends Activity implements LocationListener {
 
         return locationDetails;
     }
+
+
+    // Location listener implemented methods
 
     @Override
     public void onLocationChanged(Location location) {
