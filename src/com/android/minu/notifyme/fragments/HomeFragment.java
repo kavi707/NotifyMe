@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.android.minu.notifyme.R;
 import com.android.minu.notifyme.activities.NotifyMeActivity;
+import com.android.minu.notifyme.activities.TestLocationActivity;
 import com.android.minu.notifyme.database.LocalDatabaseSQLiteOpenHelper;
 import com.android.minu.notifyme.database.LocationData;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
@@ -133,7 +134,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 //---display Google Maps---
-                if (myLocationInfo.get("lat") != 0.0) {
+                /*if (myLocationInfo.get("lat") != 0.0) {
                     String uriString = "geo:" + myLocationInfo.get("lat")
                             + "," + myLocationInfo.get("log");
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
@@ -141,7 +142,10 @@ public class HomeFragment extends Fragment{
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "Can't show location. Clear location not found", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+
+                Intent testIntent = new Intent(getActivity(), TestLocationActivity.class);
+                startActivity(testIntent);
             }
         });
 
