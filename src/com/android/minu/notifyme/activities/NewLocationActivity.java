@@ -189,6 +189,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
                 if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                     logAndLatInfo = getLocationFromCell(cellInfo);
                     if (logAndLatInfo.get("log") == 0.0) {
+                        // Couldn't find location from Cell tracking. Try from NETWORK_PROVIDER
                         logAndLatInfo = getLocationFromNetworkProvider();
                     }
 
@@ -205,6 +206,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
             if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                 logAndLatInfo = getLocationFromCell(cellInfo);
                 if (logAndLatInfo.get("log") == 0.0) {
+                    // Couldn't find location from Cell tracking. Try from NETWORK_PROVIDER
                     logAndLatInfo = getLocationFromNetworkProvider();
                 }
 
