@@ -1,6 +1,5 @@
 package com.android.minu.notifyme.services.location;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -46,6 +44,21 @@ public class LocationService extends Service implements LocationListener {
     private Location initLocation;
     private Location getLocation;
     private Criteria criteria;
+
+    // Declaring a Location Manager
+    protected LocationManager networkLocationManager;
+
+    // Flag for network status
+    boolean isNetworkEnabled = false;
+
+    // Flag for GPS status
+    boolean canGetLocation = false;
+
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
     private Context context = this;
     private LocatorCalls locatorCalls = new LocatorCalls();
@@ -104,7 +117,7 @@ public class LocationService extends Service implements LocationListener {
         initializeLocationTimerTask();
 
         //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        locationTimer.schedule(locationTimeTask, 5000, 60000); //
+        locationTimer.schedule(locationTimeTask, 5000, 10000); //
     }
 
     private void stopTimerTask() {
@@ -204,6 +217,9 @@ public class LocationService extends Service implements LocationListener {
                 // Couldn't find initLocation from GPS. Try from cell tracking
                 if (activityUserPermissionServices.isOnline(context)) {
                     logAndLatInfo = getLocationFromCell(cellInfo);
+                    if (logAndLatInfo.get("log") == 0.0 && logAndLatInfo.get("lat") == 0.0) {
+                        logAndLatInfo = getLocationFromNetworkProvider();
+                    }
                 } else {
                     logAndLatInfo.put("log", 0.0);
                     logAndLatInfo.put("lat", 0.0);
@@ -215,6 +231,9 @@ public class LocationService extends Service implements LocationListener {
             // GPS not available. Try initLocation from cell tracking
             if (activityUserPermissionServices.isOnline(context)) {
                 logAndLatInfo = getLocationFromCell(cellInfo);
+                if (logAndLatInfo.get("log") == 0.0 && logAndLatInfo.get("lat") == 0.0) {
+                    logAndLatInfo = getLocationFromNetworkProvider();
+                }
             } else {
                 logAndLatInfo.put("log", 0.0);
                 logAndLatInfo.put("lat", 0.0);
@@ -229,6 +248,10 @@ public class LocationService extends Service implements LocationListener {
         return logAndLatInfo;
     }
 
+
+    /**
+     * Fine location from GPS. If GPS available
+     */
     private void localLocationListener() {
 
         /********** get Gps location service LocationManager object ***********/
@@ -255,6 +278,11 @@ public class LocationService extends Service implements LocationListener {
         locationManager.requestLocationUpdates(provider, 200, 1, this);
     }
 
+    /**
+     * Find location from Network cells
+     * @param cellInfo
+     * @return
+     */
     private Map<String, Double> getLocationFromCell(Map<String, Integer> cellInfo) {
         Map<String, Double> locationDetails;
         // Grep the location params from Google APIs
@@ -267,6 +295,57 @@ public class LocationService extends Service implements LocationListener {
         return locationDetails;
     }
 
+    /**
+     * Find location from Network Provider
+     * @return
+     */
+    private Map<String, Double> getLocationFromNetworkProvider() {
+
+        Map<String, Double> latLongInfo = new HashMap<String, Double>();
+        Location location;
+        Double latitude, longitude;
+
+        try {
+            networkLocationManager = (LocationManager) context
+                    .getSystemService(LOCATION_SERVICE);
+
+            // Getting network status
+            isNetworkEnabled = networkLocationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            this.canGetLocation = true;
+            if (isNetworkEnabled) {
+                networkLocationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Log.d("LocationService:getLocationFromNetworkProvider / Network", "Network Location finder");
+                if (networkLocationManager != null) {
+                    location = networkLocationManager
+                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+
+                        latLongInfo.put("log", longitude);
+                        latLongInfo.put("lat", latitude);
+                    } else {
+                        Log.d("LocationService:getLocationFromNetworkProvider / STATUS", "Couldn't find location");
+                        Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return latLongInfo;
+    }
+
+    /**
+     * Send sms to selected contact in the application
+     * @param savedLocation
+     */
     private void sendSmsToSelectedContacts (LocationData savedLocation) {
 
         String msg;

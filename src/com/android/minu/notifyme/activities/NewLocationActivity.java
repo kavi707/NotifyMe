@@ -48,6 +48,21 @@ public class NewLocationActivity extends Activity implements LocationListener {
     private Location getLocation;
     private Criteria criteria;
 
+    // Declaring a Location Manager
+    protected LocationManager networkLocationManager;
+
+    // Flag for network status
+    boolean isNetworkEnabled = false;
+
+    // Flag for GPS status
+    boolean canGetLocation = false;
+
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+
     private String provider;
     private boolean isGPSOn = false;
     private boolean isLocationAlreadySaved = false;
@@ -173,6 +188,10 @@ public class NewLocationActivity extends Activity implements LocationListener {
                 // Couldn't find initLocation from GPS. Try from cell tracking
                 if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                     logAndLatInfo = getLocationFromCell(cellInfo);
+                    if (logAndLatInfo.get("log") == 0.0) {
+                        logAndLatInfo = getLocationFromNetworkProvider();
+                    }
+
                     if (savedLocation != null) {
                         if (logAndLatInfo.get("log") == savedLocation.getLongitude() && logAndLatInfo.get("lat") == savedLocation.getLatitude()) {
                             isLocationAlreadySaved = true;
@@ -185,6 +204,10 @@ public class NewLocationActivity extends Activity implements LocationListener {
             // GPS not available. Try initLocation from cell tracking
             if (activityUserPermissionServices.isOnline(NewLocationActivity.this)) {
                 logAndLatInfo = getLocationFromCell(cellInfo);
+                if (logAndLatInfo.get("log") == 0.0) {
+                    logAndLatInfo = getLocationFromNetworkProvider();
+                }
+
                 if (savedLocation != null) {
                     if (logAndLatInfo.get("log") == savedLocation.getLongitude() && logAndLatInfo.get("lat") == savedLocation.getLatitude()) {
                         isLocationAlreadySaved = true;
@@ -202,6 +225,49 @@ public class NewLocationActivity extends Activity implements LocationListener {
 
         longitudeTextView.setText(logAndLatInfo.get("log").toString());
         latitudeTextView.setText(logAndLatInfo.get("lat").toString());
+    }
+
+    private Map<String, Double> getLocationFromNetworkProvider() {
+
+        Map<String, Double> latLongInfo = new HashMap<String, Double>();
+        Location location;
+        Double latitude, longitude;
+
+        try {
+            networkLocationManager = (LocationManager) context
+                    .getSystemService(LOCATION_SERVICE);
+
+            // Getting network status
+            isNetworkEnabled = networkLocationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            this.canGetLocation = true;
+            if (isNetworkEnabled) {
+                networkLocationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Log.d("Network", "Network Location finder");
+                if (networkLocationManager != null) {
+                    location = networkLocationManager
+                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+
+                        latLongInfo.put("log", longitude);
+                        latLongInfo.put("lat", latitude);
+                    } else {
+                        Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
+                        Log.d(">>>>>>>>>>>>>>>>>>>>>>", "Location not found");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return latLongInfo;
     }
 
     /**
@@ -243,9 +309,9 @@ public class NewLocationActivity extends Activity implements LocationListener {
         // Grep the location params from Google APIs
         locationDetails = locatorCalls.getLogAndLatLocations(cellInfo.get("cellId"), cellInfo.get("lac"));
 
-        if (locationDetails.get("log") == 0.0) {
+        /*if (locationDetails.get("log") == 0.0) {
             Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         return locationDetails;
     }
