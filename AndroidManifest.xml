@@ -36,7 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NotifierMenuActivity"/>
         <activity android:name=".activities.NotifyMeActivity"/>
         <activity android:name=".activities.NewLocationActivity" />
         <activity android:name=".activities.SelectContactActivity" />
