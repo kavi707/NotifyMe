@@ -116,8 +116,8 @@ public class LocationService extends Service implements LocationListener {
         //initialize the TimerTask's job
         initializeLocationTimerTask();
 
-        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        locationTimer.schedule(locationTimeTask, 5000, 10000); //
+        //schedule the timer, after the first 5000ms the TimerTask will run every 60000ms (per minute)
+        locationTimer.schedule(locationTimeTask, 5000, 60000); //
     }
 
     private void stopTimerTask() {
