@@ -154,19 +154,17 @@ public class ContactsFragment extends Fragment {
                 cursor.moveToFirst();
                 ContactData contactData;
                 while (cursor.moveToNext()) {
-                    contactData = new ContactData();
                     String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
-
                     String name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                    contactData.setContactName(name);
-
                     String phoneNumber = "";
                     int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
 
                     if (hasPhoneNumber > 0) {
                         Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
                         while (phoneCursor.moveToNext()) {
+                            contactData = new ContactData();
                             phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
+                            contactData.setContactName(name);
                             contactData.setContactNumberData(phoneNumber);
                             contactDataList.add(contactData);
                         }

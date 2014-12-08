@@ -102,8 +102,9 @@ public class SelectContactActivity extends Activity {
                 if (selectedContact != null) {
                     String contactNo = selectedContact.getContactNumberData();
                     if (!(contactNo.equals("") || contactNo.equals(null))) {
-                        String[] splitArray = contactNo.split(",");
-                        selectedContact.setContactNumberData(splitArray[0]);
+//                        String[] splitArray = contactNo.split(",");
+//                        selectedContact.setContactNumberData(splitArray[0]);
+                        selectedContact.setContactNumberData(contactNo);
 
                         localDatabaseSQLiteOpenHelper.saveNewContact(selectedContact);
 
