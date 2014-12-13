@@ -1,4 +1,4 @@
-package com.android.minu.notifyme.models;
+package com.android.minu.notifyme.views;
 
 public class NavDrawerItem {
 	

@@ -21,7 +21,7 @@ import com.android.minu.notifyme.adapters.NavDrawerListAdapter;
 import com.android.minu.notifyme.fragments.ContactsFragment;
 import com.android.minu.notifyme.fragments.HomeFragment;
 import com.android.minu.notifyme.fragments.LocationsFragment;
-import com.android.minu.notifyme.models.NavDrawerItem;
+import com.android.minu.notifyme.views.NavDrawerItem;
 
 import java.util.ArrayList;
 

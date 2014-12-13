@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.minu.notifyme.R;
-import com.android.minu.notifyme.models.NavDrawerItem;
+import com.android.minu.notifyme.views.NavDrawerItem;
 
 import java.util.ArrayList;
 
