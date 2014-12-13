@@ -9,7 +9,8 @@ import com.android.minu.notifyme.R;
 import com.android.minu.notifyme.database.LocationData;
 
 /**
- * Created by kwijewardana on 11/10/14.
+ * Created by minuri on 11/10/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class LocationListItem extends LinearLayout {
 

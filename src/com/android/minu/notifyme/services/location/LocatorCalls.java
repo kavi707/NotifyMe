@@ -5,7 +5,8 @@ import android.content.Context;
 import java.util.Map;
 
 /**
- * Created by kavi707 on 11/2/14.
+ * Created by minuri on 11/2/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class LocatorCalls extends Locator {
 

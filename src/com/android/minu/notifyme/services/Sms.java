@@ -10,7 +10,8 @@ import android.telephony.gsm.SmsManager;
 import android.widget.Toast;
 
 /**
- * Created by kavi707 on 11/15/14.
+ * Created by minuri on 11/15/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class Sms {
 

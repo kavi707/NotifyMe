@@ -17,6 +17,10 @@ import com.android.minu.notifyme.R;
 import com.android.minu.notifyme.services.ActivityUserPermissionServices;
 
 
+/**
+ * Created by minuri on 11/5/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ */
 public class WelcomeActivity extends Activity {
 
     protected static final int TIMER_RUNTIME = 20000;

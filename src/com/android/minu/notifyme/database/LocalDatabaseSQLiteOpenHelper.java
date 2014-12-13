@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kavi707 on 11/1/14.
+ * Created by minuri on 11/1/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class LocalDatabaseSQLiteOpenHelper extends SQLiteOpenHelper {
 

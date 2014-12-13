@@ -26,7 +26,8 @@ import com.android.minu.notifyme.views.NavDrawerItem;
 import java.util.ArrayList;
 
 /**
- * Created by kavi707 on 11/5/14.
+ * Created by minuri on 11/5/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class NotifyMeActivity extends Activity {
 

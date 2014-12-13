@@ -22,6 +22,10 @@ import com.android.minu.notifyme.database.LocationData;
 
 import java.util.List;
 
+/**
+ * Created by minuri on 11/5/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ */
 public class LocationsFragment extends Fragment {
 
     private View locationFragmentView;

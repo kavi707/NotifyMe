@@ -1,5 +1,9 @@
 package com.android.minu.notifyme.views;
 
+/**
+ * Created by minuri on 11/5/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ */
 public class NavDrawerItem {
 	
 	private String title;

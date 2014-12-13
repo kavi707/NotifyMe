@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kwijewardana on 11/11/14.
+ * Created by minuri on 11/11/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class SelectContactActivity extends Activity {
 

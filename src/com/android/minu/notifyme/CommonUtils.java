@@ -1,7 +1,8 @@
 package com.android.minu.notifyme;
 
 /**
- * Created by kavi707 on 11/1/14.
+ * Created by minuri on 11/1/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class CommonUtils {
 

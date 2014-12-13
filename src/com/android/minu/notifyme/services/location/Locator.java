@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by kwijewardana on 11/4/14.
+ * Created by minuri on 11/4/14.
+ * @author Minuri Rajapaksha <rpmchathu@gmail.com>
  */
 public class Locator {
 
