@@ -84,7 +84,7 @@ public class LocationService extends Service implements LocationListener {
         super.onCreate();
 
         Toast.makeText(this, "NotifyMy! LocationService Created", Toast.LENGTH_SHORT).show();
-        Log.d("LocationService:onCreate / @Overide", "NotifyMy! LocationService Created");
+        Log.d("NotifyMe", "LocationService:onCreate / @Overide: NotifyMy! LocationService Created");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class LocationService extends Service implements LocationListener {
         super.onStart(intent, startId);
 
         Toast.makeText(this, "NotifyMe LocationService Started", Toast.LENGTH_SHORT).show();
-        Log.d("LocationService:onStart / @Overide", "NotifyMe LocationService Started");
+        Log.d("NotifyMe", "LocationService:onStart / @Overide: NotifyMe LocationService Started");
 
         savedLocations = localDatabaseSQLiteOpenHelper.getAllLocations();
         savedContacts = localDatabaseSQLiteOpenHelper.getAllContacts();
@@ -105,7 +105,7 @@ public class LocationService extends Service implements LocationListener {
         super.onDestroy();
 
         Toast.makeText(this, "NotifyMe LocationService Stopped", Toast.LENGTH_SHORT).show();
-        Log.d("LocationService:onDestroy / @Overide", "NotifyMe LocationService Stopped");
+        Log.d("NotifyMe", "LocationService:onDestroy / @Overide: NotifyMe LocationService Stopped");
 
         stopTimerTask();
     }
@@ -153,8 +153,8 @@ public class LocationService extends Service implements LocationListener {
                             //check the latitude
                             if (locationInfo.get("lat") < (savedLocation.getLatitude() + 0.01) &&
                                     locationInfo.get("lat") > (savedLocation.getLatitude() - 0.01)) {
-                                Log.d("LocationService:initializeLocationTimerTask / Current Latitude: ", String.valueOf(locationInfo.get("lat")));
-                                Log.d("LocationService:initializeLocationTimerTask / Saved location Latitude: ", String.valueOf(savedLocation.getLatitude()));
+                                Log.d("NotifyMe", "LocationService:initializeLocationTimerTask / Current Latitude: " + String.valueOf(locationInfo.get("lat")));
+                                Log.d("NotifyMe", "LocationService:initializeLocationTimerTask / Saved location Latitude: " + String.valueOf(savedLocation.getLatitude()));
 
                                 latitudeMatching = true;
                             } else {
@@ -165,8 +165,8 @@ public class LocationService extends Service implements LocationListener {
                             if (locationInfo.get("log") < (savedLocation.getLongitude() + 0.01) &&
                                     locationInfo.get("log") > (savedLocation.getLongitude() - 0.01)) {
 
-                                Log.d("LocationService:initializeLocationTimerTask / Current Longitude: ", String.valueOf(locationInfo.get("log")));
-                                Log.d("LocationService:initializeLocationTimerTask / Saved location Longitude: ", String.valueOf(savedLocation.getLongitude()));
+                                Log.d("NotifyMe", "LocationService:initializeLocationTimerTask / Current Longitude: " + String.valueOf(locationInfo.get("log")));
+                                Log.d("NotifyMe", "LocationService:initializeLocationTimerTask / Saved location Longitude: " + String.valueOf(savedLocation.getLongitude()));
 
                                 longitudeMatching = true;
                             } else {
@@ -174,7 +174,7 @@ public class LocationService extends Service implements LocationListener {
                             }
 
                             if (latitudeMatching && longitudeMatching) {
-                                Log.d("LocationService:initializeLocationTimerTask / Found Location Name: ", "Location: " + savedLocation.getLocationName());
+                                Log.d("NotifyMe", "LocationService:initializeLocationTimerTask / Found Location Name: Location: " + savedLocation.getLocationName());
 
                                 if (!sentLastLocation.equals(savedLocation.getLocationName())) {
                                     timeCounter = 0;
@@ -203,8 +203,8 @@ public class LocationService extends Service implements LocationListener {
         Map<String, Integer> cellInfo = locatorCalls.getCellInformation(context);
         Map<String, Double> logAndLatInfo = new HashMap<String, Double>();
 
-        Log.d("LocationService:refreshCurrentLocation / cell id: ", String.valueOf(cellInfo.get("cellId")));
-        Log.d("LocationService:refreshCurrentLocation / L.A.C: ", String.valueOf(cellInfo.get("lac")));
+        Log.d("NotifyMe", "LocationService:refreshCurrentLocation / cell id: " + String.valueOf(cellInfo.get("cellId")));
+        Log.d("NotifyMe", "LocationService:refreshCurrentLocation / L.A.C: " + String.valueOf(cellInfo.get("lac")));
 
         if (isGPSOn) {
             //Check with GPS location listener
@@ -225,7 +225,7 @@ public class LocationService extends Service implements LocationListener {
                     logAndLatInfo.put("log", 0.0);
                     logAndLatInfo.put("lat", 0.0);
 
-                    Log.d("LocationService:refreshCurrentLocation / STATUS ", "Device is in offline");
+                    Log.d("NotifyMe", "LocationService:refreshCurrentLocation / STATUS: Device is in offline");
                 }
             }
         } else {
@@ -239,12 +239,12 @@ public class LocationService extends Service implements LocationListener {
                 logAndLatInfo.put("log", 0.0);
                 logAndLatInfo.put("lat", 0.0);
 
-                Log.d("LocationService:refreshCurrentLocation / STATUS ", "Device is in offline");
+                Log.d("NotifyMe", "LocationService:refreshCurrentLocation / STATUS: Device is in offline");
             }
         }
 
-        Log.d("LocationService:refreshCurrentLocation / longitude: ", String.valueOf(logAndLatInfo.get("log")));
-        Log.d("LocationService:refreshCurrentLocation / latitude: ", String.valueOf(logAndLatInfo.get("lat")));
+        Log.d("NotifyMe", "LocationService:refreshCurrentLocation / longitude: " + String.valueOf(logAndLatInfo.get("log")));
+        Log.d("NotifyMe", "LocationService:refreshCurrentLocation / latitude: " + String.valueOf(logAndLatInfo.get("lat")));
 
         return logAndLatInfo;
     }
@@ -290,7 +290,7 @@ public class LocationService extends Service implements LocationListener {
         locationDetails = locatorCalls.getLogAndLatLocations(cellInfo.get("cellId"), cellInfo.get("lac"));
 
         if (locationDetails.get("log") == 0.0) {
-            Log.d("LocationService:getLocationFromCell / STATUS ", "Couldn't find location");
+            Log.d("NotifyMe", "LocationService:getLocationFromCell / STATUS: Couldn't find location");
         }
 
         return locationDetails;
@@ -320,7 +320,7 @@ public class LocationService extends Service implements LocationListener {
                         LocationManager.NETWORK_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                Log.d("LocationService:getLocationFromNetworkProvider / Network", "Network Location finder");
+                Log.d("NotifyMe", "LocationService:getLocationFromNetworkProvider / Network: Network Location finder");
                 if (networkLocationManager != null) {
                     location = networkLocationManager
                             .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -331,7 +331,7 @@ public class LocationService extends Service implements LocationListener {
                         latLongInfo.put("log", longitude);
                         latLongInfo.put("lat", latitude);
                     } else {
-                        Log.d("LocationService:getLocationFromNetworkProvider / STATUS", "Couldn't find location");
+                        Log.d("NotifyMe", "LocationService:getLocationFromNetworkProvider / STATUS: Couldn't find location");
                         Toast.makeText(context, "Couldn't find location", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -372,9 +372,9 @@ public class LocationService extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         // Initialize the initLocation fields
-        Log.d("LocationService:onLocationChanged / Location Params : ", "Latitude: " + String.valueOf(location.getLatitude()));
-        Log.d("LocationService:onLocationChanged /Location Params : ", "Longitude: " + String.valueOf(location.getLongitude()));
-        Log.d("LocationService:onLocationChanged /Location Params : ", provider + " provider has been selected.");
+        Log.d("NotifyMe", "LocationService:onLocationChanged / Location Params : Latitude: " + String.valueOf(location.getLatitude()));
+        Log.d("NotifyMe", "LocationService:onLocationChanged /Location Params : Longitude: " + String.valueOf(location.getLongitude()));
+        Log.d("NotifyMe", "LocationService:onLocationChanged /Location Params : " + provider + " provider has been selected.");
 
         this.getLocation = location;
     }
@@ -386,14 +386,14 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("LocationService:onDestroy / @Overide", "Provider " + provider + " enabled!");
+        Log.d("NotifyMe", "LocationService:onDestroy / @Overide: Provider " + provider + " enabled!");
         Toast.makeText(this, "Provider " + provider + " enabled!",
                 Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("LocationService:onDestroy / @Overide", "Provider " + provider + " disabled!");
+        Log.d("NotifyMe", "LocationService:onDestroy / @Overide: Provider " + provider + " disabled!");
         Toast.makeText(this, "Provider " + provider + " disabled!",
                 Toast.LENGTH_SHORT).show();
     }

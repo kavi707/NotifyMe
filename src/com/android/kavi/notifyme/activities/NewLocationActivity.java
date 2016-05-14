@@ -98,7 +98,7 @@ public class NewLocationActivity extends Activity implements LocationListener {
         // Check the GPS status on the device
         isGPSOn = activityUserPermissionServices.isGPSOn(context);
 
-        Log.d("GPS availability", "STATUS :" + isGPSOn);
+        Log.d("NotifyMe", " GPS availability : STATUS :" + isGPSOn);
 
         // Check the current location details
         refreshCurrentLocation();

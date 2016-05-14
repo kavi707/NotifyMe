@@ -75,7 +75,7 @@ public class Connector {
             Log.d("Connector", "Connector:SendHttpPostTask");
 
             try {
-                Log.d("Connector:SendHttpPostTask / Req Url : ", postRequestUrl);
+                Log.d("NotifyMe", "Connector:SendHttpPostTask / Req Url : " + postRequestUrl);
 
                 URL url = new URL(postRequestUrl);
                 URLConnection conn = url.openConnection();
@@ -113,7 +113,7 @@ public class Connector {
                 }
 
             } catch (Exception ex) {
-                Log.d("Connector:SendHttpPostTask / Exception", ex.toString());
+                Log.d("NotifyMe", "Connector:SendHttpPostTask / Exception: " + ex.toString());
             }
 
             return lagAndLatInfo;
