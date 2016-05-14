@@ -39,8 +39,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by minuri on 11/5/14.
- * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ * Created by Kavi on 11/5/14.
+ * @author Kavimal Wijewardana <kavi707@gmail.com>
  */
 public class ContactsFragment extends Fragment {
 

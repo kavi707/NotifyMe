@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by minuri on 11/1/14.
- * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ * Created by Kavi on 11/1/14.
+ * @author Kavimal Wijewardana <kavi707@gmail.com>
  */
 public class ConnectorCalls extends Connector {
 

@@ -26,8 +26,8 @@ import com.android.minu.notifyme.views.NavDrawerItem;
 import java.util.ArrayList;
 
 /**
- * Created by minuri on 11/5/14.
- * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ * Created by Kavi on 11/5/14.
+ * @author Kavimal Wijewardana <kavi707@gmail.com>
  */
 public class NotifyMeActivity extends Activity {
 
@@ -173,7 +173,7 @@ public class NotifyMeActivity extends Activity {
                 fragment = new HomeFragment(context);
                 break;
             case 1:
-                fragment = new LocationsFragment(context);
+                fragment = new HomeFragment(context);
                 break;
             case 2:
                 fragment = new ContactsFragment(context);

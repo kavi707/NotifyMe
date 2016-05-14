@@ -15,8 +15,8 @@ import com.android.minu.notifyme.views.NavDrawerItem;
 import java.util.ArrayList;
 
 /**
- * Created by minuri on 11/5/14.
- * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ * Created by Kavi on 11/5/14.
+ * @author Kavimal Wijewardana <kavi707@gmail.com>
  */
 public class NavDrawerListAdapter extends BaseAdapter {
 	

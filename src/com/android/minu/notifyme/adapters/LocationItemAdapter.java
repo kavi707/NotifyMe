@@ -12,8 +12,8 @@ import com.android.minu.notifyme.views.LocationListItem;
 import java.util.List;
 
 /**
- * Created by minuri on 11/10/14.
- * @author Minuri Rajapaksha <rpmchathu@gmail.com>
+ * Created by Kavi on 11/10/14.
+ * @author Kavimal Wijewardana <kavi707@gmail.com>
  */
 public class LocationItemAdapter extends BaseAdapter {
 
