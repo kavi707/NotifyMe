@@ -55,12 +55,17 @@ public class LocationsFragment extends Fragment {
         return locationFragmentView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loadLocationsToListView();
+    }
+
     private void setUpViews() {
         addNewLocationViewButton = (Button) locationFragmentView.findViewById(R.id.addNewLocationViewButton);
         locationsListView = (ListView) locationFragmentView.findViewById(R.id.locationsListView);
         locationsImageView = (ImageView) locationFragmentView.findViewById(R.id.locationImageView);
-
-        loadLocationsToListView();
 
         addNewLocationViewButton.setOnClickListener(new View.OnClickListener() {
             @Override

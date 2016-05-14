@@ -68,6 +68,13 @@ public class ContactsFragment extends Fragment {
         return contactsFragmentView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loadContactsToListView();
+    }
+
     private void setUpViews() {
 
         addNewContactsViewButton = (Button) contactsFragmentView.findViewById(R.id.addNewContactsViewButton);
@@ -89,8 +96,6 @@ public class ContactsFragment extends Fragment {
                 loadContactsToListView();
             }
         });
-
-        loadContactsToListView();
 
         selectedContactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
