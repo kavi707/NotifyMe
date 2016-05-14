@@ -2,4 +2,6 @@
 /.git
 /production
 /build
+/gen
+.DS_Store
 *.iml
