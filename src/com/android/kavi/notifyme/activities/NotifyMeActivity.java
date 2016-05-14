@@ -130,11 +130,11 @@ public class NotifyMeActivity extends Activity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,13 +154,13 @@ public class NotifyMeActivity extends Activity {
     /* *
      * Called when invalidateOptionsMenu() is triggered
      */
-    @Override
+    /*@Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
-    }
+    }*/
 
     /**
      * Diplaying fragment view for selected nav drawer list item
