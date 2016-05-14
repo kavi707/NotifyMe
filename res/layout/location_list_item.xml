@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.android.minu.notifyme.views.LocationListItem xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.kavi.notifyme.views.LocationListItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,4 +27,4 @@
         android:layout_height="20dp"
         android:id="@+id/locationItemDetailsTextView"/>
 
-</com.android.minu.notifyme.views.LocationListItem>
+</com.android.kavi.notifyme.views.LocationListItem>

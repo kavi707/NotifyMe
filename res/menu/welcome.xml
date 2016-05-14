@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.android.minu.notifyme.activities.WelcomeActivity" >
+    tools:context="com.android.kavi.notifyme.activities.WelcomeActivity" >
 
     <item
         android:id="@+id/action_settings"
