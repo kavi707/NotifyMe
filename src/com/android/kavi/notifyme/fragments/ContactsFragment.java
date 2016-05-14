@@ -52,17 +52,15 @@ public class ContactsFragment extends Fragment {
 
     private static List<ContactData> contactDataList = new ArrayList<ContactData>();
 
-	public ContactsFragment(Context context){
-        this.context = context;
-        localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
-        new  LoadContactsFromDeviceTask().execute();
-    }
-
 	public ContactsFragment(){}
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+
+        this.context = getActivity();
+        localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
+        new  LoadContactsFromDeviceTask().execute();
 
         contactsFragmentView = inflater.inflate(R.layout.fragment_contacts, container, false);
         setUpViews();

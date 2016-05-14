@@ -40,17 +40,15 @@ public class LocationsFragment extends Fragment {
 
     private AlertDialog messageBalloonAlertDialog;
 
-	public LocationsFragment(Context context){
-        this.context = context;
-        this.localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
-    }
-
 	public LocationsFragment(){}
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
- 
+
+        this.context = getActivity();
+        this.localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
+
         locationFragmentView = inflater.inflate(R.layout.fragment_locations, container, false);
         setUpViews();
          

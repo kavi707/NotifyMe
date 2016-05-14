@@ -79,15 +79,13 @@ public class HomeFragment extends Fragment implements LocationListener{
 
     public HomeFragment(){}
 
-    public HomeFragment(Context context){
-        this.context = context;
-        this.localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
-        this.mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    }
-
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+
+        this.context = getActivity();
+        this.localDatabaseSQLiteOpenHelper = new LocalDatabaseSQLiteOpenHelper(context);
+        this.mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         homeFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
         setUpViews();

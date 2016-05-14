@@ -20,6 +20,7 @@ import com.android.kavi.notifyme.R;
 import com.android.kavi.notifyme.adapters.NavDrawerListAdapter;
 import com.android.kavi.notifyme.fragments.ContactsFragment;
 import com.android.kavi.notifyme.fragments.HomeFragment;
+import com.android.kavi.notifyme.fragments.LocationsFragment;
 import com.android.kavi.notifyme.views.NavDrawerItem;
 
 import java.util.ArrayList;
@@ -70,11 +71,11 @@ public class NotifyMeActivity extends Activity {
 
         // adding nav drawer items to array
         // Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], R.drawable.ic_home /*navMenuIcons.getResourceId(0, -1)*/));
         // View Locations
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], R.drawable.ic_photos /*navMenuIcons.getResourceId(1, -1)*/));
         // View Contacts
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], R.drawable.ic_communities /*navMenuIcons.getResourceId(2, -1)*/));
 
 
         // Recycle the typed array
@@ -169,13 +170,13 @@ public class NotifyMeActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new HomeFragment(context);
+                fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new HomeFragment(context);
+                fragment = new LocationsFragment();
                 break;
             case 2:
-                fragment = new ContactsFragment(context);
+                fragment = new ContactsFragment();
                 break;
 
             default:
