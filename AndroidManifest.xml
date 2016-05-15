@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.kavi.notifyme"
+    package="com.kavi.droid.notifyme"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -27,10 +27,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-        <service android:name="com.android.kavi.notifyme.services.location.LocationService" />
+        <service android:name="com.kavi.droid.notifyme.services.location.LocationService" />
 
         <activity
-            android:name="com.android.kavi.notifyme.activities.WelcomeActivity"
+            android:name="com.kavi.droid.notifyme.activities.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,9 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.android.kavi.notifyme.activities.NotifyMeActivity"/>
-        <activity android:name="com.android.kavi.notifyme.activities.NewLocationActivity" />
-        <activity android:name="com.android.kavi.notifyme.activities.SelectContactActivity" />
+        <activity android:name="com.kavi.droid.notifyme.activities.NotifyMeActivity"/>
+        <activity android:name="com.kavi.droid.notifyme.activities.NewLocationActivity" />
+        <activity android:name="com.kavi.droid.notifyme.activities.SelectContactActivity" />
     </application>
 
 </manifest>
