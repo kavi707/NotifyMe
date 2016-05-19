@@ -8,7 +8,7 @@ When you on Location Service in the device, It is using more & more battery in y
 In this application we grab the location through GPS and Network Cells. If device's location service is enabled, then we use GPS to get the location. We use the normal Android SDK's method to get the longitude & Latitude. If device's location services are not enabled, then we use our alternative way 'Locations from Network Cells' method to pick relative current location.
 
 ## What are these 'Network cells'?
-In the globe all we covered from GSM network. Through that all we doing calls, sms, data & etc. If you have a mobile phone, then you also under this network. 
+In the globe we all covered from GSM network. Through that we are doing calls, sms, data & etc. If you have a mobile phone, then you also under this network. 
 
 Basically from 3 points we can create area then according to that case, if we think about 3 GSM towers, we can create an area of Network. Simply that area can be call as a Network cell. 
 
