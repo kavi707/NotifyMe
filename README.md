@@ -9,7 +9,7 @@ In this application we grab the location through GPS and Network Cells. If devic
 
 ##### Sample Application
 
-[NotifyMe - Google Play](https://github.com/kavi707/NotifyMe/blob/master/README.md). You can download the sample application from **Google Play** and try it your self.
+[NotifyMe - Google Play](https://play.google.com/store/apps/details?id=com.kavi.droid.notifyme). You can download the sample application from **Google Play** and try it your self.
 <br>
 <br>
 
