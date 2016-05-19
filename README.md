@@ -7,6 +7,12 @@ When you on Location Service in the device, It is using more & more battery in y
 ## What we are doing here?
 In this application we grab the location through GPS and Network Cells. If device's location service is enabled, then we use GPS to get the location. We use the normal Android SDK's method to get the longitude & latitude. If device's location services are not enabled, then we use our alternative way 'Locations from Network Cells' method to pick relative current location.
 
+##### Sample Application
+
+[NotifyMe - Google Play](https://github.com/kavi707/NotifyMe/blob/master/README.md). You can download the sample application from **Google Play** and try it your self.
+<br>
+<br>
+
 ##### Application Flow
 ![alt tag](https://raw.githubusercontent.com/wiki/kavi707/NotifyMe/images/NotifyMe.jpg)
 
